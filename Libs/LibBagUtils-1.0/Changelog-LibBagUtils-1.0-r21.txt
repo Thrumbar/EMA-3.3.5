@@ -1,0 +1,7 @@
+------------------------------------------------------------------------
+r21 | cyberwitch | 2010-12-26 02:57:37 +0000 (Sun, 26 Dec 2010) | 1 line
+Changed paths:
+   M /trunk/LibBagUtils-1.0/LibBagUtils-1.0.lua
+
+Added check for nil itemcount (AKA empty bag slot) in FindSmallestStack.
+------------------------------------------------------------------------
