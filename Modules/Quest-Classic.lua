@@ -1216,7 +1216,7 @@ function EMA:QUEST_PROGRESS()
 	if EMA.db.allAutoSelectQuests == true and EMA:CanAutomateAutoSelectAndComplete() == true then
 		if IsQuestCompletable() then
 			
-			if QuestFrame:IsShown() == true then
+			if QuestFrame:IsShown() == 1 then
 				EMA.isInternalCommand = true
 				CompleteQuest()
 				EMA.isInternalCommand = false
@@ -1568,7 +1568,7 @@ function EMA:ChooseBestRewardForCharacter()
 		end
         --EMA:Print("Sell", itemSellPrice,mostValuableQuestItemValue )               
 		--EMA:Print("testcanuse", isItemEquippable,isItemUsable )
-		if isItemEquippable == true and isItemUsable ~= nil then
+		if isItemEquippable == 1 and isItemUsable ~= nil then
 			-- NPC is offering us an item we can actually wear:
 			local currentEquippedItemLinksInSlots = {}
 			local currentWorstEquippedItemInSlot = nil
@@ -1629,9 +1629,9 @@ function EMA:ChooseBestRewardForCharacter()
 	end
 	-- DebugCode
 		local _, name = GetItemInfo(GetQuestItemLink("choice", bestQuestItemIndex) )
-	EMA:Print("PickQuestReward", bestQuestItemIndex, name )
+	--EMA:Print("PickQuestReward", bestQuestItemIndex, name )
 	-- DoStuff
-	--GetQuestReward(bestQuestItemIndex)
+	GetQuestReward(bestQuestItemIndex)
 
 end
 
@@ -1660,7 +1660,7 @@ function EMA:AcceptQuest()
 	if EMA.db.acceptQuests == true then
 		if EMA.db.slaveMirrorMasterAccept == true then
 			if EMA.isInternalCommand == false then
-                EMA:DebugMessage( "AcceptQuest" )
+                EMA:Print( "AcceptQuest" )
 				EMA:EMASendCommandToTeam( EMA.COMMAND_ACCEPT_QUEST )
 			end		
 		end
@@ -1671,9 +1671,9 @@ function EMA:DoAcceptQuest( sender )
 	if EMA.db.acceptQuests == true and EMA.db.slaveMirrorMasterAccept == true then
 	local questName = GetTitleText()
 	local questIndex = EMA:GetQuestLogIndexByName( questName )
-	
+		EMA:Print("test", questName, questIndex )
 		--Only works if the quest frame is open. Stops sending a blank quest. Tell the team a char not got the quest window open???? <<<<<< TODO
-		if QuestFrame:IsShown() == true then
+		if QuestFrame:IsShown() == 1 then
 			--EMA:Print( "DoAcceptQuest", questName, questIndex, sender) 
 			EMA.isInternalCommand = true
 			EMA:DebugMessage( "DoAcceptQuest" )
@@ -1704,7 +1704,7 @@ function EMA:DoMagicAutoAcceptQuestGrrrr()
 		EMA.isInternalCommand = true
 		EMA:DebugMessage( "DoMagicAutoAcceptQuestGrrrr" )
 		EMA:EMASendMessageToTeam( EMA.db.messageArea, L["AUTO_ACCEPTED_PICKUPQUEST_QN"]( GetTitleText() ), false )
-	--	AcknowledgeAutoAcceptQuest()
+--		AcknowledgeAutoAcceptQuest()
 		HideUIPanel( QuestFrame )
 		EMA.isInternalCommand = false
 	end
@@ -2167,7 +2167,7 @@ end
 
 function EMA:GetQuestLogIndexByName( questName )
 	for iterateQuests = 1, GetNumQuestLogEntries() do
-        local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory = GetQuestLogTitle( iterateQuests )
+        local title, level, tag, suggestedGroup, isHeader, isCollapsed, isComplete, isDaily = GetQuestLogTitle( iterateQuests )
 		if not isHeader then
 			if title == questName then
 				return iterateQuests

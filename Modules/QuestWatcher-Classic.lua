@@ -178,14 +178,12 @@ function EMA:OnEnable()
 	EMA:RegisterEvent( "PLAYER_REGEN_ENABLED" )
 	EMA:RegisterEvent( "PLAYER_REGEN_DISABLED" )
 	EMA:RegisterEvent( "QUEST_WATCH_UPDATE" )
-	EMA:RegisterEvent( "QUEST_LOG_UPDATE")
-	EMA:RegisterEvent( "UNIT_QUEST_LOG_CHANGED", "QUEST_WATCH_UPDATE" )
-	EMA:RegisterEvent( "QUEST_WATCH_LIST_CHANGED", "QUEST_WATCH_UPDATE" )
+	
 	-- For in the field auto quests. And Bonus Quests.
 	EMA:RegisterEvent("QUEST_ACCEPTED", "QUEST_WATCH_UPDATE")
 	EMA:RegisterEvent("QUEST_REMOVED", "RemoveQuestsNotBeingWatched")
-	EMA:RegisterEvent( "QUEST_AUTOCOMPLETE" )
-	EMA:RegisterEvent( "QUEST_COMPLETE" )
+--	EMA:RegisterEvent( "QUEST_AUTOCOMPLETE" )
+--	EMA:RegisterEvent( "QUEST_COMPLETE" )
 	EMA:RegisterEvent( "QUEST_DETAIL" )
 	EMA:RegisterEvent( "PLAYER_ENTERING_WORLD" )
    -- Quest post hooks.
@@ -1009,8 +1007,7 @@ function EMA:RemoveQuestWatch( questIndex )
     EMA:DebugMessage( "RemoveQuestWatch", questIndex )
 	EMA:UpdateHideBlizzardWatchFrame()
 	EMA:ScheduleTimer( "UpdateHideBlizzardWatchFrame", 0.3 )
-	local title, level, suggestedGroup, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory = GetQuestLogTitle( questIndex )
-    EMA:DebugMessage( "About to call RemoveQuestFromWatchList with value:", questID )
+local questLogTitleText, level, questTag,  suggestedGroup, isHeader, isCollapsed,  isComplete, isDaily, questID = GetQuestLogTitle( questIndex )    EMA:DebugMessage( "About to call RemoveQuestFromWatchList with value:", questID )
 	EMA:RemoveQuestFromWatchList( questID )
 end
 
